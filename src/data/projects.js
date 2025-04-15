@@ -5,13 +5,18 @@ const projects = [
       title: 'AnimeNexus',
       shortDescription: 'A modern anime and manga tracking platform with social features and AI-enhanced content',
       overview: 'AnimeNexus is a comprehensive anime and manga tracking platform designed to provide users with a clean, modern interface for discovering, tracking, and engaging with their favorite anime and manga content. The project includes features like personal libraries, detailed information pages, community discussions, and friend connections.',
-      technologies: ['React', 'Node.js', 'Express.js', 'PostgreSQL', 'Mistral LLM'],
+      technologies: ['React', 'Node.js', 'Express.js', 'PostgreSQL', 'Redis', 'Mistral LLM'],
       bgColor: 'bg-gradient-to-r from-purple-600 to-indigo-600',
       liveUrl: 'https://animenexusdb.up.railway.app/',
       githubUrl: 'https://github.com/yourusername/animenexus',
       images: [
-        // Replace with actual images when available
         '/images/projects/animenexus/main.webp',
+        '/images/projects/animenexus/main_light.webp',
+        '/images/projects/animenexus/animenexus_anime.webp',
+        '/images/projects/animenexus/animenexus_manga.webp',
+        '/images/projects/animenexus/animenexus_characters.webp',
+        '/images/projects/animenexus/animenexus_detail.webp',
+        '/images/projects/animenexus/animenexus_profile.webp',
       ],
       technical: [
         'AnimeNexus was built using a modern JavaScript stack, with React on the frontend, Node.js and Express.js for the backend API, and PostgreSQL for the database.',
@@ -29,7 +34,8 @@ const projects = [
         'PostgreSQL for relational data storage',
         'Authentication system with JWT',
         'Integration with Jikan API for data',
-        'Sentry for application monitoring'
+        'Sentry for application monitoring',
+        'Redis caching for quickly calling data'
       ],
       features: [
         {
