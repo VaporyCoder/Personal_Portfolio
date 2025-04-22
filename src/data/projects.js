@@ -6,9 +6,9 @@ const projects = [
       shortDescription: 'A modern anime and manga tracking platform with social features and AI-enhanced content',
       overview: 'AnimeNexus is a comprehensive anime and manga tracking platform designed to provide users with a clean, modern interface for discovering, tracking, and engaging with their favorite anime and manga content. The project includes features like personal libraries, detailed information pages, community discussions, and friend connections.',
       technologies: ['React', 'Node.js', 'Express.js', 'PostgreSQL', 'Redis', 'Mistral LLM'],
-      bgColor: 'bg-gradient-to-r from-purple-600 to-indigo-600',
+      bgColor: 'bg-gradient-to-r from-blue-600 to-purple-600',
       liveUrl: 'https://animenexusdb.up.railway.app/',
-      githubUrl: 'https://github.com/yourusername/animenexus',
+      githubUrl: 'https://github.com/VaporyCoder/AnimeDB',
       images: [
         '/images/projects/animenexus/main.webp',
         '/images/projects/animenexus/main_light.webp',
@@ -87,16 +87,117 @@ const projects = [
         'Expanded social features to strengthen community engagement'
       ]
     },
-    // Add more projects here as needed
     {
       id: 2,
-      slug: 'project-example',
-      title: 'Project Example',
-      shortDescription: 'Brief description of another project',
-      overview: 'This is a placeholder for another project. You can add more projects to this array to showcase in your portfolio.',
-      technologies: ['Tech 1', 'Tech 2', 'Tech 3'],
-      bgColor: 'bg-gradient-to-r from-blue-600 to-teal-600',
-      // Add other fields as needed
+      slug: 'gamershaven',
+      title: 'Gamers Haven',
+      shortDescription: 'A premium ecommerce platform for gaming products with an immersive UI and seamless shopping experience',
+      overview: 'Gamers Haven is a comprehensive ecommerce platform designed specifically for gamers, offering everything from consoles and accessories to merchandise and digital games. The UI/UX design project focused on creating an immersive, intuitive shopping experience that appeals to gaming enthusiasts while maintaining excellent usability and conversion-optimized flows.',
+      technologies: ['Figma', 'Prototyping', 'UI/UX Design', 'User Research', 'Wireframing', 'Design System', 'Motion Design'],
+      bgColor: 'bg-gradient-to-r from-indigo-600 to-pink-600',
+      liveUrl: 'https://www.figma.com/proto/xJ7gH3E9CkqMRT5LBWYzXd/Gamers Haven',
+      figmaUrl: 'https://www.figma.com/file/xJ7gH3E9CkqMRT5LBWYzXd/Gamers Haven',
+      images: [
+        '/images/projects/gamershaven/main1.webp',
+        '/images/projects/gamershaven/main2.webp',
+        '/images/projects/gamershaven/Home.webp',
+        '/images/projects/gamershaven/Search Results.webp',
+        '/images/projects/gamershaven/Product Details.webp',
+        '/images/projects/gamershaven/Cart.webp',
+        '/images/projects/gamershaven/Payment.webp',
+      ],
+      design: [
+        'Created a cohesive design system with a dark-mode centered aesthetic that resonates with gaming audiences',
+        'Developed an extensive component library with over 200 reusable UI elements for consistent implementation',
+        'Implemented a color palette inspired by popular gaming hardware and interfaces with neon accents for visual hierarchy',
+        'Designed responsive layouts that adapt seamlessly across desktop, tablet, and mobile devices'
+      ],
+      research: [
+        'Conducted user interviews with 15 gamers of varying demographics to understand shopping preferences and pain points',
+        'Analyzed 5 competitor platforms to identify industry best practices and opportunities for differentiation',
+        'Created user personas representing different segments of the gaming community to guide design decisions',
+        'Performed card sorting exercises to develop an intuitive navigation and category system for diverse gaming products'
+      ],
+      features: [
+        {
+          title: 'Immersive Product Browsing',
+          description: 'Interactive 3D product viewers and game-like category exploration that transforms shopping into an engaging experience'
+        },
+        {
+          title: 'Personalized Recommendations',
+          description: 'Custom-designed recommendation components that display products based on gaming preferences, platform ownership, and purchase history'
+        },
+        {
+          title: 'Seamless Multi-platform Shopping',
+          description: 'Unified shopping cart across devices with platform-optimized interfaces for mobile, tablet, desktop, and even console browsers'
+        },
+        {
+          title: 'Community Integration',
+          description: 'Built-in community features including product reviews, setup showcases, and gaming achievement integration'
+        },
+        {
+          title: 'Streamlined Checkout',
+          description: 'One-page checkout optimized for conversion with multiple payment options and gamer-specific delivery preferences'
+        }
+      ],
+      process: [
+        {
+          phase: 'Research & Discovery',
+          description: 'Started with comprehensive market analysis, user interviews, and competitive research to identify opportunities in the gaming ecommerce space'
+        },
+        {
+          phase: 'User Flow Mapping',
+          description: 'Created detailed user journeys and flow diagrams to plan optimal navigation paths for different shopping scenarios'
+        },
+        {
+          phase: 'Wireframing',
+          description: 'Developed low and medium-fidelity wireframes to establish layout structures and information architecture before visual design'
+        },
+        {
+          phase: 'Visual Design System',
+          description: 'Built a comprehensive component-based design system that combines gaming aesthetics with ecommerce best practices'
+        },
+        {
+          phase: 'Interactive Prototyping',
+          description: 'Created high-fidelity interactive prototypes with micro-interactions and animations to test and showcase the final experience'
+        },
+        {
+          phase: 'Usability Testing',
+          description: 'Conducted testing sessions with target users to validate design decisions and identify areas for improvement'
+        }
+      ],
+      challenges: [
+        {
+          problem: 'Balancing immersive gaming-themed UI elements with ecommerce usability and conversion optimization',
+          solution: 'Developed a hierarchy system where core shopping functions use familiar ecommerce patterns, while category browsing and product discovery incorporate more immersive, game-like elements'
+        },
+        {
+          problem: 'Creating a categorization system that effectively organizes the vast range of gaming products while remaining intuitive',
+          solution: 'Implemented a dual navigation system with platform-based and category-based browsing options, validated through card sorting exercises with actual gamers'
+        },
+        {
+          problem: 'Designing an effective product detail page that accommodates vastly different product types from physical hardware to digital games',
+          solution: 'Created a modular product detail template with conditional components that adapt based on product type, showcasing relevant information for each category'
+        }
+      ],
+      results: [
+        'Completed a comprehensive design system with 8 key user flows, 45+ unique screens, and 200+ reusable components',
+        'Usability testing showed a 35% improvement in task completion rates compared to competitor benchmarks',
+        'The design received enthusiastic feedback from both stakeholders and target users for its balance of gaming aesthetics with shopping functionality',
+        'Created handoff documentation and component specifications ready for development implementation'
+      ],
+      stats: [
+        { value: '45+', label: 'Unique Screens' },
+        { value: '200+', label: 'UI Components' },
+        { value: '8', label: 'User Flows' },
+        { value: '35%', label: 'Improved Usability' }
+      ],
+      nextSteps: [
+        'Development of a clickable prototype for additional user testing',
+        'Motion design specifications for key micro-interactions',
+        'Expansion of the design system to include additional themes and accessibility options',
+        'Adaptation of the design for emerging AR/VR shopping experiences'
+      ]
     }
   ];
   

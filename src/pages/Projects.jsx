@@ -1,205 +1,125 @@
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import projects from "../data/projects";
 
 const Projects = () => {
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-indigo-600 via-purple-500 to-indigo-500 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/10 blur-3xl"></div>
-          <div className="absolute bottom-10 left-1/4 w-40 h-40 rounded-full bg-white/10 blur-2xl"></div>
-          <div className="grid grid-cols-6 gap-1 absolute inset-0 opacity-10">
-            {Array(24)
-              .fill()
-              .map((_, i) => (
-                <div key={i} className="h-6 w-6 rounded-sm bg-white"></div>
-              ))}
-          </div>
-        </div>
+    <div className="relative min-h-screen w-full bg-white dark:bg-gray-900 transition-colors duration-500">
+      {/* Noise texture overlay */}
+      <div className="fixed inset-0 pointer-events-none z-10 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIH PohYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]"></div>
 
-        <div className="container mx-auto px-4 relative z-10">
+      {/* Projects Section */}
+      <section id="projects" className="py-32 relative">
+        <div className="container mx-auto px-8">
+          {/* Section Header */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col md:flex-row items-center justify-between"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="mb-20"
           >
-            <div className="max-w-2xl">
-              <h1 className="text-3xl md:text-4xl font-bold mb-3 inline-block border-b-2 border-indigo-300 pb-1">
-                Featured Projects
-              </h1>
-              <p className="text-lg text-indigo-100 mt-3">
-                Explore my portfolio of web applications, showcasing creative
-                solutions and technical expertise.
-              </p>
+            <div className="flex items-center mb-4">
+              <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
+              <h2 className="text-lg text-indigo-500 dark:text-indigo-400 font-semibold uppercase tracking-wide">
+                My Portfolio
+              </h2>
             </div>
-
-            <div className="mt-6 md:mt-0">
-              <a
-                href="#projects-grid"
-                className="inline-flex items-center px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg border border-white/20 transition-colors"
-              >
-                <span>View All</span>
-                <svg
-                  className="w-4 h-4 ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </a>
-            </div>
+            <h3 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8">
+              All Projects
+            </h3>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl">
+              A showcase of my work, demonstrating expertise in web development, UI/UX design, and creative problem-solving.
+            </p>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Projects Grid */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Projects Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {projects.map((project, index) => (
+              <Link to={`/projects/${project.slug}`}>
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card group h-full flex flex-col"
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.8,
+                  delay: index * 0.1,
+                  ease: [0.25, 0.1, 0.25, 1],
+                }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="relative group bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 overflow-hidden"
+                whileHover={{ y: -10 }}
               >
-                <div
-                  className={`relative overflow-hidden h-56 ${
-                    project.bgColor || "bg-indigo-600"
-                  }`}
-                >
-                  {project.images && project.images.length > 0 ? (
-                    <img
-                      src={project.images[0]}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-2xl font-bold text-white">
-                        {project.title}
-                      </span>
-                    </div>
-                  )}
+                {/* Project Image */}
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${project.bgColor} opacity-20`}></div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-full h-full bg-gray-100 dark:bg-gray-800"
+                  >
+                    {project.images?.length > 0 ? (
+                      <img
+                        src={project.images[0]}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className={`w-full h-full bg-gradient-to-br ${project.bgColor} opacity-50`}></div>
+                    )}
+                  </motion.div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
 
-                <div className="p-6 flex-grow flex flex-col">
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-slate-600 dark:text-slate-400 mb-4 flex-grow">
+                {/* Project Content */}
+                <div className="p-6">
+                  <h4 className="text-xl font-bold mb-2 text-gray-900 dark:text-white group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors">
+                    {project.title}
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm">
                     {project.shortDescription}
                   </p>
-
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.slice(0, 3).map((tech, i) => (
+                    {project.technologies.slice(0, 4).map((tech, i) => (
                       <span
                         key={i}
-                        className="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium rounded-full"
+                        className="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
                       >
                         {tech}
                       </span>
                     ))}
-                    {project.technologies.length > 3 && (
-                      <span className="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium rounded-full">
-                        +{project.technologies.length - 3} more
+                    {project.technologies.length > 4 && (
+                      <span className="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                        +{project.technologies.length - 4} more
                       </span>
                     )}
                   </div>
-
-                  <Link
-                    to={`/projects/${project.slug}`}
-                    className="inline-flex items-center font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300"
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    whileHover={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    View Case Study
-                    <svg
-                      className="ml-1 w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 5l7 7-7 7"
-                      ></path>
-                    </svg>
-                  </Link>
+                      View Project
+                      <svg
+                        className="ml-2 w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        />
+                      </svg>
+                    
+                  </motion.div>
                 </div>
+                
               </motion.div>
+              </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Other Work/Simple Projects Section */}
-      <section className="py-20 bg-slate-50 dark:bg-slate-800/50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-center">
-              Other Projects
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Small Project Cards - These would be simpler projects without full case studies */}
-              {[1, 2, 3, 4].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="card p-6"
-                >
-                  <h3 className="text-xl font-bold mb-2">
-                    Small Project {item}
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-400 mb-4">
-                    Brief description of a smaller project or contribution.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium rounded-full">
-                      Tech 1
-                    </span>
-                    <span className="px-3 py-1 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium rounded-full">
-                      Tech 2
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-indigo-600 dark:bg-indigo-700 text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Interested in Working Together?
-            </h2>
-            <p className="text-xl mb-10 text-indigo-100">
-              I'm always open to discussing new projects, creative ideas or
-              opportunities to be part of your vision.
-            </p>
-            <Link
-              to="/contact"
-              className="btn bg-white text-indigo-600 hover:bg-indigo-50 text-lg px-8 py-3"
-            >
-              Get In Touch
-            </Link>
           </div>
         </div>
       </section>

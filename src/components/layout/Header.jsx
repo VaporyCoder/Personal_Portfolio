@@ -1,210 +1,118 @@
-import { useState, useEffect } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
-const Header = ({ darkMode, toggleDarkMode }) => {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+const Header = () => {
+  // State management
+  const [cursorHovering, setCursorHovering] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Handle scroll effect
+  // Handle scroll events
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
+      setScrollY(window.scrollY);
+    };
     
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle('dark');
+  };
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-200 ${
-      isScrolled 
-        ? 'bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-sm' 
-        : 'bg-transparent'
-    }`}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between py-4">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
-              Jonathan Lara
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8 items-center">
-            <NavLink 
-              to="/" 
-              className={({ isActive }) => 
-                `text-base font-medium transition-colors ${
-                  isActive 
-                    ? 'text-indigo-600 dark:text-indigo-400' 
-                    : 'text-slate-700 hover:text-indigo-600 dark:text-slate-200 dark:hover:text-indigo-400'
-                }`
-              }
+    <header 
+      className="fixed top-0 w-full py-6 px-8 z-40 transition-all duration-500"
+      style={{
+        backgroundColor: scrollY > 20 
+          ? isDarkMode ?   'rgba(17, 24, 39, 0.8)' : 'rgba(255, 255, 255, 0.8)'
+          : 'transparent',
+        backdropFilter: scrollY > 20 ? 'blur(10px)' : 'none',
+        boxShadow: scrollY > 20 ? '0 4px 30px rgba(0, 0, 0, 0.1)' : 'none',
+      }}
+    >
+      <div className="container mx-auto flex justify-between items-center">
+        <Link 
+          to="/" 
+          className="text-3xl font-bold"
+          onMouseEnter={() => setCursorHovering(true)}
+          onMouseLeave={() => setCursorHovering(false)}
+        >
+          <span className="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+            JL
+          </span>
+        </Link>
+        
+        <nav className="hidden md:flex space-x-12">
+          {[
+            { name: 'Home', path: '/' },
+            { name: 'Projects', path: '/projects' },
+            { name: 'Contact', path: '/contact' }
+          ].map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              className="font-medium relative text-gray-800 dark:text-gray-200 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400"
+              onMouseEnter={() => setCursorHovering(true)}
+              onMouseLeave={() => setCursorHovering(false)}
             >
-              Home
-            </NavLink>
-            <NavLink 
-              to="/about" 
-              className={({ isActive }) => 
-                `text-base font-medium transition-colors ${
-                  isActive 
-                    ? 'text-indigo-600 dark:text-indigo-400' 
-                    : 'text-slate-700 hover:text-indigo-600 dark:text-slate-200 dark:hover:text-indigo-400'
-                }`
-              }
-            >
-              About
-            </NavLink>
-            <NavLink 
-              to="/projects" 
-              className={({ isActive }) => 
-                `text-base font-medium transition-colors ${
-                  isActive 
-                    ? 'text-indigo-600 dark:text-indigo-400' 
-                    : 'text-slate-700 hover:text-indigo-600 dark:text-slate-200 dark:hover:text-indigo-400'
-                }`
-              }
-            >
-              Projects
-            </NavLink>
-            <NavLink 
-              to="/contact" 
-              className={({ isActive }) => 
-                `text-base font-medium transition-colors ${
-                  isActive 
-                    ? 'text-indigo-600 dark:text-indigo-400' 
-                    : 'text-slate-700 hover:text-indigo-600 dark:text-slate-200 dark:hover:text-indigo-400'
-                }`
-              }
-            >
-              Contact
-            </NavLink>
-            
-            {/* Dark Mode Toggle */}
-            <button 
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-              aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-            >
-              {darkMode ? (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                </svg>
-              )}
-            </button>
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button 
-            className="md:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors"
-            onClick={toggleMobileMenu}
-            aria-label="Toggle menu"
+              {item.name}
+              <motion.span
+                initial={{ scaleX: 0 }}
+                whileHover={{ scaleX: 1 }}
+                className="absolute -bottom-1 left-0 right-0 h-0.5 bg-indigo-600 dark:bg-indigo-400 origin-left"
+              />
+            </Link>
+          ))}
+        </nav>
+        
+        <div className="flex items-center space-x-6">
+          <button
+            onClick={toggleDarkMode}
+            className="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+            onMouseEnter={() => setCursorHovering(true)}
+            onMouseLeave={() => setCursorHovering(false)}
           >
-            {isMobileMenuOpen ? (
+            {isDarkMode ? (
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             ) : (
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
               </svg>
             )}
           </button>
+          
+          <Link
+            to="/contact"
+            className="hidden md:flex items-center px-4 py-2 border-2 border-indigo-600 dark:border-indigo-400 rounded-full text-indigo-600 dark:text-indigo-400 font-medium transition-colors hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-400 dark:hover:text-gray-900"
+            onMouseEnter={() => setCursorHovering(true)}
+            onMouseLeave={() => setCursorHovering(false)}
+          >
+            <span>Say Hello</span>
+            <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </Link>
+          
+          <button
+            className="md:hidden text-gray-800 dark:text-gray-200"
+            onMouseEnter={() => setCursorHovering(true)}
+            onMouseLeave={() => setCursorHovering(false)}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-slate-900 shadow-lg">
-          <nav className="flex flex-col px-4 py-4 space-y-4">
-            <NavLink 
-              to="/" 
-              className={({ isActive }) => 
-                `text-base font-medium transition-colors ${
-                  isActive 
-                    ? 'text-indigo-600 dark:text-indigo-400' 
-                    : 'text-slate-700 hover:text-indigo-600 dark:text-slate-200 dark:hover:text-indigo-400'
-                }`
-              }
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Home
-            </NavLink>
-            <NavLink 
-              to="/about" 
-              className={({ isActive }) => 
-                `text-base font-medium transition-colors ${
-                  isActive 
-                    ? 'text-indigo-600 dark:text-indigo-400' 
-                    : 'text-slate-700 hover:text-indigo-600 dark:text-slate-200 dark:hover:text-indigo-400'
-                }`
-              }
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              About
-            </NavLink>
-            <NavLink 
-              to="/projects" 
-              className={({ isActive }) => 
-                `text-base font-medium transition-colors ${
-                  isActive 
-                    ? 'text-indigo-600 dark:text-indigo-400' 
-                    : 'text-slate-700 hover:text-indigo-600 dark:text-slate-200 dark:hover:text-indigo-400'
-                }`
-              }
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Projects
-            </NavLink>
-            <NavLink 
-              to="/contact" 
-              className={({ isActive }) => 
-                `text-base font-medium transition-colors ${
-                  isActive 
-                    ? 'text-indigo-600 dark:text-indigo-400' 
-                    : 'text-slate-700 hover:text-indigo-600 dark:text-slate-200 dark:hover:text-indigo-400'
-                }`
-              }
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Contact
-            </NavLink>
-            
-            {/* Dark Mode Toggle */}
-            <div className="flex items-center">
-              <button 
-                onClick={toggleDarkMode}
-                className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-                aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-              >
-                {darkMode ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                  </svg>
-                )}
-              </button>
-              <span className="ml-2 text-slate-700 dark:text-slate-300">
-                {darkMode ? 'Light Mode' : 'Dark Mode'}
-              </span>
-            </div>
-          </nav>
-        </div>
-      )}
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
