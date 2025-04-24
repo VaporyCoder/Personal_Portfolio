@@ -122,7 +122,7 @@ const Contact = () => {
 
       {/* Contact Hero Section */}
       <section className="pt-32 pb-16 relative">
-        <div className="absolute w-[600px] h-[600px] opacity-20 dark:opacity-30 blur-3xl left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute w-[600px] h-[600px] opacity-20 blur-3xl left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <motion.div
             animate={{ 
               rotateZ: 360,
@@ -149,7 +149,7 @@ const Contact = () => {
           >
             <div className="inline-flex items-center mb-6">
               <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
-              <h2 className="text-lg text-indigo-500 dark:text-indigo-400 font-semibold uppercase tracking-wide">
+              <h2 className="text-lg text-indigo-500 font-semibold uppercase tracking-wide">
                 Contact
               </h2>
               <div className="w-12 h-1 bg-indigo-500 ml-4"></div>
@@ -161,7 +161,7 @@ const Contact = () => {
               transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
               className="text-5xl md:text-6xl font-bold tracking-tight mb-8"
             >
-              <span className="text-gray-900 dark:text-white">Let's </span>
+              <span className="text-gray-900">Let's </span>
               <span className="bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 bg-clip-text text-transparent">
                 Connect
               </span>
@@ -171,7 +171,7 @@ const Contact = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-              className="text-xl text-gray-600 dark:text-gray-300 mb-12"
+              className="text-xl text-gray-600 mb-12"
             >
               Have a project in mind or just want to say hello? I'd love to hear from you.
               Let's start a conversation about how we can work together.
@@ -192,24 +192,24 @@ const Contact = () => {
               className="space-y-10"
             >
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">
                   Get in Touch
                 </h3>
                 
                 <div className="space-y-6">
                   <div className="flex items-start">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center mr-4">
                       <svg className="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     </div>
                     <div>
-                      <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-1">
+                      <h4 className="text-lg font-medium text-gray-900 mb-1">
                         Email
                       </h4>
                       <a 
                         href="mailto:jlara2019@gmail.com" 
-                        className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+                        className="text-gray-600 hover:text-indigo-500 transition-colors"
                       >
                         jlara2019@gmail.com
                       </a>
@@ -217,19 +217,19 @@ const Contact = () => {
                   </div>
                   
                   <div className="flex items-start">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center mr-4">
                       <svg className="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </div>
                     <div>
-                      <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-1">
+                      <h4 className="text-lg font-medium text-gray-900 mb-1">
                         Location
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-gray-600">
                         Dallas, TX
-                        <span className="block text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        <span className="block text-sm text-gray-500 mt-1">
                           Available for remote work worldwide
                         </span>
                       </p>
@@ -237,18 +237,18 @@ const Contact = () => {
                   </div>
                   
                   <div className="flex items-start">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center mr-4">
                       <svg className="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
                     <div>
-                      <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-1">
+                      <h4 className="text-lg font-medium text-gray-900 mb-1">
                         Availability
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-gray-600">
                         Currently open for new projects
-                        <span className="block text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        <span className="block text-sm text-gray-500 mt-1">
                           Initial response within 24-48 hours
                         </span>
                       </p>
@@ -258,7 +258,7 @@ const Contact = () => {
               </div>
               
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">
                   Connect with me
                 </h3>
                 <div className="flex space-x-5">
@@ -271,13 +271,13 @@ const Contact = () => {
                     <a
                       key={platform.name}
                       href={`#${platform.name.toLowerCase()}`}
-                      className="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center group transition-all"
+                      className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center group transition-all"
                       onMouseEnter={() => setCursorHovering(true)}
                       onMouseLeave={() => setCursorHovering(false)}
                     >
                       <span className="sr-only">{platform.name}</span>
                       <svg
-                        className="h-5 w-5 text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-800 dark:group-hover:text-indigo-300 transition-colors"
+                        className="h-5 w-5 text-indigo-600 group-hover:text-indigo-800 transition-colors"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                         aria-hidden="true"
@@ -290,7 +290,7 @@ const Contact = () => {
               </div>
               
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">
                   Frequently Asked Questions
                 </h3>
                 
@@ -314,12 +314,12 @@ const Contact = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: i * 0.1 }}
-                      className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700"
+                      className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 "
                     >
-                      <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                      <h4 className="text-lg font-medium text-gray-900 mb-2">
                         {faq.question}
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-gray-600">
                         {faq.answer}
                       </p>
                     </motion.div>
@@ -335,8 +335,8 @@ const Contact = () => {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-8 sticky top-32">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 sticky top-32">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">
                   Send a Message
                 </h3>
                 
@@ -344,17 +344,17 @@ const Contact = () => {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6 text-center"
+                    className="bg-green-50 border border-green-200 rounded-xl p-6 text-center"
                   >
-                    <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">
                       Message Sent!
                     </h4>
-                    <p className="text-gray-600 dark:text-gray-300 mb-0">
+                    <p className="text-gray-600 mb-0">
                       Thank you for reaching out. I'll get back to you as soon as possible.
                     </p>
                   </motion.div>
@@ -362,17 +362,17 @@ const Contact = () => {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-center"
+                    className="bg-red-50 border border-red-200 rounded-xl p-6 text-center"
                   >
-                    <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </div>
-                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">
                       Something went wrong!
                     </h4>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    <p className="text-gray-600 mb-4">
                       There was an error sending your message. Please try again.
                     </p>
                     <button
@@ -386,7 +386,7 @@ const Contact = () => {
                   <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                           Your Name
                         </label>
                         <input
@@ -396,12 +396,12 @@ const Contact = () => {
                           value={formData.name}
                           onChange={handleInputChange}
                           required
-                          className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                          className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 placeholder-gray-500"
                           placeholder="John Doe"
                         />
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                           Email Address
                         </label>
                         <input
@@ -411,14 +411,14 @@ const Contact = () => {
                           value={formData.email}
                           onChange={handleInputChange}
                           required
-                          className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                          className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 placeholder-gray-500"
                           placeholder="john@example.com"
                         />
                       </div>
                     </div>
                     
                     <div>
-                      <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
                         Subject
                       </label>
                       <input
@@ -428,13 +428,13 @@ const Contact = () => {
                         value={formData.subject}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 placeholder-gray-500"
                         placeholder="Project Inquiry"
                       />
                     </div>
                     
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                         Your Message
                       </label>
                       <textarea
@@ -444,7 +444,7 @@ const Contact = () => {
                         onChange={handleInputChange}
                         required
                         rows={6}
-                        className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 placeholder-gray-500"
                         placeholder="Tell me about your project..."
                       ></textarea>
                     </div>
@@ -475,7 +475,7 @@ const Contact = () => {
                       )}
                     </motion.button>
                     
-                    <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-4">
+                    <p className="text-sm text-gray-500 text-center mt-4">
                       I'll respond to your message within 24-48 hours.
                     </p>
                   </form>
@@ -488,7 +488,7 @@ const Contact = () => {
 
       {/* Call to Action Section */}
       <section className="py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 opacity-10 dark:opacity-20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 opacity-10"></div>
         <div className="container mx-auto px-8 relative z-20">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -497,10 +497,10 @@ const Contact = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="max-w-3xl mx-auto text-center"
           >
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
               Ready to Start Your Next Project?
             </h3>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
               Whether you need a complete digital solution or have a specific challenge in mind,
               I'm here to help bring your vision to life.
             </p>
@@ -515,7 +515,7 @@ const Contact = () => {
               </a>
               <Link
                 to="/projects"
-                className="px-8 py-4 rounded-full border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-lg font-medium transition-all hover:border-indigo-500 hover:text-indigo-500 dark:hover:border-indigo-400 dark:hover:text-indigo-400"
+                className="px-8 py-4 rounded-full border-2 border-gray-300 text-gray-700 text-lg font-medium transition-all hover:border-indigo-500 hover:text-indigo-500"
                 onMouseEnter={() => setCursorHovering(true)}
                 onMouseLeave={() => setCursorHovering(false)}
               >

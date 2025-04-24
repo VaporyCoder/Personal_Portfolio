@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Footer = ({ setCursorHovering }) => {
   return (
-    <footer className="py-12 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+    <footer className="py-12 bg-white border-t border-gray-200">
       <div className="container mx-auto px-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
@@ -38,7 +38,7 @@ const Footer = ({ setCursorHovering }) => {
               <a
                 key={platform}
                 href={`#${platform.toLowerCase()}`}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:text-indigo-500 transition-colors"
                 onMouseEnter={() => setCursorHovering(true)}
                 onMouseLeave={() => setCursorHovering(false)}
               >
@@ -63,8 +63,8 @@ const Footer = ({ setCursorHovering }) => {
           </div>
         </div>
         
-        <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="mt-8 pt-8 border-t border-gray-200 text-center">
+          <p className="text-sm text-gray-500">
             © {new Date().getFullYear()} Jonathan Lara. All rights reserved.
           </p>
         </div>

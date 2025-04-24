@@ -56,7 +56,7 @@ const Header = () => {
             <Link
               key={item.name}
               to={item.path}
-              className="font-medium relative text-gray-800 dark:text-gray-200 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400"
+              className="font-medium relative text-gray-800 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400"
               onMouseEnter={() => setCursorHovering(true)}
               onMouseLeave={() => setCursorHovering(false)}
             >
@@ -73,7 +73,7 @@ const Header = () => {
         <div className="flex items-center space-x-6">
           <button
             onClick={toggleDarkMode}
-            className="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+            className="text-gray-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
             onMouseEnter={() => setCursorHovering(true)}
             onMouseLeave={() => setCursorHovering(false)}
           >
