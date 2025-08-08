@@ -24,16 +24,6 @@ const Home = () => {
     target: containerRef,
   });
 
-  // Handle cursor movement
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-    };
-    
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   // Handle scroll events
   useEffect(() => {
     const handleScroll = () => {
@@ -101,7 +91,7 @@ const Home = () => {
               className="mb-6 flex items-center"
             >
               <div className="text-sm uppercase tracking-widest font-medium bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-1.5 rounded-full text-white">
-                Web Developer & UI/UX Designer
+              UI/UX Designer
               </div>
             </motion.div>
             
@@ -156,22 +146,38 @@ const Home = () => {
         <AnimatePresence>
           {showScrollIndicator && (
             <motion.div
-              className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
+              className="fixed bottom-12 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
+              exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
             >
               <motion.div
                 animate={{ y: [0, 12, 0] }}
-                transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                className="w-8 h-12 rounded-full border-2 border-gray-400 justify-center pt-2"
+                transition={{ 
+                  repeat: Infinity, 
+                  duration: 1.5, 
+                  ease: "easeInOut",
+                  repeatType: "reverse"
+                }}
+                className="w-8 h-12 rounded-full border-2 border-indigo-500 flex items-center justify-center"
               >
-                <motion.div className="w-1.5 h-1.5 rounded-full bg-gray-400" />
+                <div
+                  className="w-2 h-2 rounded-full bg-indigo-500"
+                />
               </motion.div>
-              <div className="mt-2 text-x text-center text-gray-400 font-medium">
+              <motion.div 
+                className="mt-2 text-sm text-center text-indigo-500 font-medium tracking-wider"
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ 
+                  repeat: Infinity, 
+                  duration: 1.5, 
+                  ease: "easeInOut",
+                  repeatType: "reverse"
+                }}
+              >
                 SCROLL
-              </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -332,70 +338,12 @@ const Home = () => {
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Development */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
-              whileHover={{ y: -10 }}
-            >
-              <div className="w-16 h-16 rounded-2xl bg-indigo-100 flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-              </div>
-              
-              <h4 className="text-2xl font-bold mb-4 text-gray-900">
-                Development
-              </h4>
-              
-              <p className="text-gray-600 mb-6">
-                Building robust, scalable applications with modern frameworks and clean, maintainable code.
-              </p>
-              
-              <div className="space-y-3">
-                {[
-                  "React", 
-                  "TypeScript",
-                  "Node.js",
-                  "Next.js",
-                  "GraphQL",
-                  "REST APIs",
-                  "PostgreSQL",
-                  "Firebase"
-                ].map((skill, i) => (
-                  <motion.div 
-                    key={skill}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: i * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center"
-                  >
-                    <motion.div
-                      animate={{
-                        scale: [1, 1.2, 1],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatDelay: i * 0.2,
-                      }}
-                      className="w-2 h-2 rounded-full bg-indigo-500 mr-3"
-                    />
-                    <span className="text-gray-700">{skill}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
             
             {/* Design */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
               whileHover={{ y: -10 }}
@@ -433,16 +381,59 @@ const Home = () => {
                     viewport={{ once: true }}
                     className="flex items-center"
                   >
-                    <motion.div
-                      animate={{
-                        scale: [1, 1.2, 1],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatDelay: i * 0.2,
-                      }}
-                      className="w-2 h-2 rounded-full bg-purple-500 mr-3"
+                    <div
+                      className="w-2 h-2 rounded-full bg-indigo-500 mr-3"
+                    />
+                    <span className="text-gray-700">{skill}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Development */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
+              whileHover={{ y: -10 }}
+            >
+              <div className="w-16 h-16 rounded-2xl bg-indigo-100 flex items-center justify-center mb-6">
+                <svg className="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              </div>
+              
+              <h4 className="text-2xl font-bold mb-4 text-gray-900">
+                Development
+              </h4>
+              
+              <p className="text-gray-600 mb-6">
+                Building robust, scalable applications with modern frameworks and clean, maintainable code.
+              </p>
+              
+              <div className="space-y-3">
+                {[
+                  "React", 
+                  "TypeScript",
+                  "Node.js",
+                  "Next.js",
+                  "GraphQL",
+                  "REST APIs",
+                  "PostgreSQL",
+                  "Firebase"
+                ].map((skill, i) => (
+                  <motion.div 
+                    key={skill}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: i * 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-center"
+                  >
+                    <div
+                      className="w-2 h-2 rounded-full bg-indigo-500 mr-3"
                     />
                     <span className="text-gray-700">{skill}</span>
                   </motion.div>
@@ -454,7 +445,7 @@ const Home = () => {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.3, delay: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
               whileHover={{ y: -10 }}
@@ -492,16 +483,8 @@ const Home = () => {
                     viewport={{ once: true }}
                     className="flex items-center"
                   >
-                    <motion.div
-                      animate={{
-                        scale: [1, 1.2, 1],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatDelay: i * 0.2,
-                      }}
-                      className="w-2 h-2 rounded-full bg-pink-500 mr-3"
+                    <div
+                      className="w-2 h-2 rounded-full bg-indigo-500 mr-3"
                     />
                     <span className="text-gray-700">{skill}</span>
                   </motion.div>
@@ -530,7 +513,7 @@ const Home = () => {
               {[
                 {
                   year: "2024 - Present",
-                  title: "Freelance Web Developer",
+                  title: "Freelance Designer",
                   company: "Self-employed",
                   description: "Designing and developing custom responsive websites and web applications for diverse clients using React, TypeScript and modern UI frameworks. Managing projects from concept to deployment while providing ongoing technical support and maintenance."
                 },
@@ -581,123 +564,6 @@ const Home = () => {
               ))}
             </div>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-32 relative">
-        <div className="container mx-auto px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mb-20 text-center"
-          >
-            <div className="flex items-center justify-center mb-4">
-              <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
-              <h2 className="text-lg text-indigo-500 font-semibold uppercase tracking-wide">
-                Testimonials
-              </h2>
-              <div className="w-12 h-1 bg-indigo-500 ml-4"></div>
-            </div>
-            <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-              Client Feedback
-            </h3>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              What people say about working with me
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Sarah Johnson",
-                role: "Product Manager, TechVision",
-                quote: "Jonathan delivered an exceptional user experience that perfectly aligned with our brand identity. His attention to detail and problem-solving skills are remarkable.",
-                image: "/images/testimonials/sarah.webp" 
-              },
-              {
-                name: "Michael Chen",
-                role: "CTO, CreativeEdge",
-                quote: "Working with Jonathan was a pleasure. He understood our vision immediately and translated it into an intuitive interface that our users love.",
-                image: "/images/testimonials/michael.webp"
-              },
-              {
-                name: "Emily Rodriguez",
-                role: "Founder, Design Forward",
-                quote: "Jonathan's technical skills combined with his design sensibility make him a rare find. He consistently exceeded our expectations throughout the project.",
-                image: "/images/testimonials/emily.webp"
-              }
-            ].map((testimonial, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.2 }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative"
-              >
-                <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
-                  <svg className="w-16 h-16 text-indigo-100 " fill="currentColor" viewBox="0 0 32 32">
-                    <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-1.1.9-2 2-2V8zm12 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2V8z"/>
-                  </svg>
-                </div>
-                
-                <div className="mb-6">
-                  <p className="text-gray-700 italic relative z-10">
-                    "{testimonial.quote}"
-                  </p>
-                </div>
-                
-                <div className="flex items-center">
-                  <div>
-                    <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-500">{testimonial.role}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: "5+", label: "Years Experience" },
-              { value: "20+", label: "Projects Completed" },
-              { value: "15+", label: "Happy Clients" },
-              { value: "3+", label: "Design Awards" },
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <motion.div
-                  initial={{ scale: 0.5, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  transition={{ 
-                    type: "spring", 
-                    stiffness: 200, 
-                    damping: 10,
-                    delay: 0.2 + index * 0.1 
-                  }}
-                  viewport={{ once: true }}
-                  className="text-4xl md:text-5xl font-bold text-indigo-600 mb-2"
-                >
-                  {stat.value}
-                </motion.div>
-                <p className="text-gray-600">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
       

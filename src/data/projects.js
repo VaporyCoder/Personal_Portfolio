@@ -181,16 +181,10 @@ const projects = [
         }
       ],
       results: [
-        'Completed a comprehensive design system with 8 key user flows, 45+ unique screens, and 200+ reusable components',
-        'Usability testing showed a 35% improvement in task completion rates compared to competitor benchmarks',
-        'The design received enthusiastic feedback from both stakeholders and target users for its balance of gaming aesthetics with shopping functionality',
-        'Created handoff documentation and component specifications ready for development implementation'
+        'This was just a personal project'
       ],
       stats: [
-        { value: '45+', label: 'Unique Screens' },
-        { value: '200+', label: 'UI Components' },
-        { value: '8', label: 'User Flows' },
-        { value: '35%', label: 'Improved Usability' }
+        { value: '1', label: 'months spent' }
       ],
       nextSteps: [
         'Development of a clickable prototype for additional user testing',
