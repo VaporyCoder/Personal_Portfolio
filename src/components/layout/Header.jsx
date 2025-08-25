@@ -6,7 +6,16 @@ const Header = () => {
   // State management
   const [cursorHovering, setCursorHovering] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+     if (typeof window !== "undefined") {
+       // Check localStorage first
+        const saved = localStorage.getItem("theme");
+       if (saved) return saved === "dark";
+        // Fall back to system preference
+        return window.matchMedia("(prefers-color-scheme: dark)").matches;
+      }
+     return false;
+   });
 
   // Handle scroll events
   useEffect(() => {

@@ -3,6 +3,22 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Link } from "react-router-dom";
 import projects from "../data/projects";
 
+const DESIGN_TAGS = new Set([
+  "Figma","UI/UX Design","User Research","Wireframing","Prototyping",
+  "Design System","Interaction Design","Motion Design","Accessibility",
+  "Information Architecture","Usability Testing","Journey Mapping"
+]);
+
+const methodChips = (p) => {
+  const fromTools = Array.isArray(p.tools) ? p.tools : [];
+  if (fromTools.length) return [...new Set(fromTools)].slice(0, 6);
+
+  const fromTech = Array.isArray(p.technologies)
+    ? p.technologies.filter(t => DESIGN_TAGS.has(t))
+    : [];
+  return [...new Set(fromTech)].slice(0, 6);
+};
+
 const Home = () => {
   // State management
   const [activeProject, setActiveProject] = useState(0);
@@ -123,21 +139,21 @@ const Home = () => {
               className="flex flex-wrap gap-4"
             >
               <Link
-                to="/work"
+                to="/projects"
                 className="px-8 py-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-lg font-medium transition-transform hover:-translate-y-1 hover:shadow-lg"
                 onMouseEnter={() => setCursorHovering(true)}
                 onMouseLeave={() => setCursorHovering(false)}
               >
                 View My Work
               </Link>
-              <a
-                href="#contact"
+              <Link
+                to="/contact"
                 className="px-8 py-4 rounded-full border-2 border-gray-300 text-gray-700 text-lg font-medium transition-all hover:border-indigo-500 hover:text-indigo-500"
                 onMouseEnter={() => setCursorHovering(true)}
                 onMouseLeave={() => setCursorHovering(false)}
               >
                 Get In Touch
-              </a>
+              </Link>
             </motion.div>
           </div>
         </div>
@@ -183,132 +199,135 @@ const Home = () => {
         </AnimatePresence>
       </section>
 
-      {/* Featured Projects */}
-      <section id="projects" ref={projectsRef} className="min-h-screen py-32 relative">
-        <div className="container mx-auto px-8">
+      {/* Case Studies */}
+<section id="projects" ref={projectsRef} className="min-h-screen py-32 relative">
+  <div className="container mx-auto px-8">
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true, margin: "-100px" }}
+      className="mb-20"
+    >
+      <div className="flex items-center mb-4">
+        <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
+        <h2 className="text-lg text-indigo-500 font-semibold uppercase tracking-wide">
+          Case Studies
+        </h2>
+      </div>
+      <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+        Recent Work
+      </h3>
+      <p className="text-xl text-gray-600 max-w-2xl">
+        A selection of product design projects. Each case study covers the problem, process, and outcomes.
+      </p>
+    </motion.div>
+
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+      {projects.map((project, index) => {
+        const chips = methodChips(project);
+        return (
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            key={project.slug || project.id}
+            initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{
+              duration: 0.8,
+              delay: index * 0.2,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mb-20"
+            className="relative group"
+            onMouseEnter={() => setCursorHovering(true)}
+            onMouseLeave={() => setCursorHovering(false)}
           >
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
-              <h2 className="text-lg text-indigo-500 font-semibold uppercase tracking-wide">
-                Featured Projects
-              </h2>
-            </div>
-            <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-              Recent Work
-            </h3>
-            <p className="text-xl text-gray-600 max-w-2xl">
-              Explore a selection of projects that showcase my expertise in creating intuitive, impactful digital experiences.
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-            {projects.map((project, index) => (
+            <div className="relative aspect-video mb-8 overflow-hidden rounded-xl">
+              {/* If bgColor already includes gradient classes, use it directly; otherwise fall back */}
+              <div className={`absolute inset-0 ${project.bgColor || "bg-gradient-to-br from-indigo-500 to-purple-600"} opacity-20`} />
               <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.8, 
-                  delay: index * 0.2,
-                  ease: [0.25, 0.1, 0.25, 1],
-                }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="relative group"
-                onMouseEnter={() => setCursorHovering(true)}
-                onMouseLeave={() => setCursorHovering(false)}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.5 }}
+                className="w-full h-full bg-gray-100 overflow-hidden"
               >
-                <div className="relative aspect-video mb-8 overflow-hidden rounded-xl">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${project.bgColor} opacity-20`}></div>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-full h-full bg-gray-100 overflow-hidden"
-                  >
-                    {project.images?.length > 0 ? (
-                      <img
-                        src={project.images[0]}
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className={`w-full h-full bg-gradient-to-br ${project.bgColor} opacity-50`}></div>
-                    )}
-                  </motion.div>
-                  
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileHover={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute bottom-0 left-0 right-0 p-6"
-                  >
-                    <Link
-                      to={`/projects/${project.slug}`}
-                      className="inline-flex items-center px-4 py-2 bg-white text-gray-900 rounded-full text-sm font-medium"
-                    >
-                      View Project
-                      <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </Link>
-                  </motion.div>
-                </div>
-                
-                <h4 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-indigo-500 transition-colors">
-                  {project.title}
-                </h4>
-                
-                <p className="text-gray-600 mb-6">
-                  {project.shortDescription}
-                </p>
-                
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.technologies.slice(0, 5).map((tech, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.technologies.length > 5 && (
-                    <span className="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700">
-                      +{project.technologies.length - 5} more
-                    </span>
-                  )}
-                </div>
+                {project.images?.length > 0 ? (
+                  <img
+                    src={project.images[0]}
+                    alt={project.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className={`w-full h-full ${project.bgColor || "bg-gradient-to-br from-indigo-500 to-purple-600"} opacity-50`} />
+                )}
               </motion.div>
-            ))}
-          </div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mt-20 text-center"
-          >
-            <Link
-              to="/projects"
-              className="inline-flex items-center text-indigo-500 font-medium hover:text-indigo-600 transition-colors"
-              onMouseEnter={() => setCursorHovering(true)}
-              onMouseLeave={() => setCursorHovering(false)}
-            >
-              <span>View All Projects</span>
-              <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileHover={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute bottom-0 left-0 right-0 p-6"
+              >
+                <Link
+                  to={`/projects/${project.slug}`}
+                  className="inline-flex items-center px-4 py-2 bg-white text-gray-900 rounded-full text-sm font-medium"
+                >
+                  Read case study
+                  <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </Link>
+              </motion.div>
+            </div>
+
+            <h4 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-indigo-500 transition-colors">
+              {project.title}
+            </h4>
+
+            <p className="text-gray-600 mb-6">
+              {project.shortDescription || project.overview}
+            </p>
+
+            {/* Design methods / tools chips */}
+            {chips.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-6">
+                {chips.map((chip) => (
+                  <span
+                    key={chip}
+                    className="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700"
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </div>
+            )}
           </motion.div>
-        </div>
-      </section>
+        );
+      })}
+    </div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true, margin: "-100px" }}
+      className="mt-20 text-center"
+    >
+      <Link
+        to="/projects"
+        className="inline-flex items-center text-indigo-500 font-medium hover:text-indigo-600 transition-colors"
+        onMouseEnter={() => setCursorHovering(true)}
+        onMouseLeave={() => setCursorHovering(false)}
+      >
+        <span>View all case studies</span>
+        <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </Link>
+    </motion.div>
+  </div>
+</section>
+
 
       {/* Skills & Expertise */}
       <section id="skills" ref={skillsRef} className="py-32 relative bg-gray-50">

@@ -208,10 +208,10 @@ const Contact = () => {
                         Email
                       </h4>
                       <a 
-                        href="mailto:jlara2019@gmail.com" 
+                        href="mailto:professional.jonathanlara@gmail.com" 
                         className="text-gray-600 hover:text-indigo-500 transition-colors"
                       >
-                        jlara2019@gmail.com
+                        professional.jonathanlara@gmail.com
                       </a>
                     </div>
                   </div>
@@ -254,76 +254,6 @@ const Contact = () => {
                       </p>
                     </div>
                   </div>
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                  Connect with me
-                </h3>
-                <div className="flex space-x-5">
-                  {[
-                    { name: "GitHub", icon: "M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" },
-                    { name: "LinkedIn", icon: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" },
-                    { name: "Twitter", icon: "M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" },
-                    { name: "Dribbble", icon: "M12 24C5.385 24 0 18.615 0 12S5.385 0 12 0s12 5.385 12 12-5.385 12-12 12zm10.12-10.358c-.35-.11-3.17-.953-6.384-.438 1.34 3.684 1.887 6.684 1.992 7.308 2.3-1.555 3.936-4.02 4.395-6.87zm-6.115 7.808c-.153-.9-.75-4.032-2.19-7.77l-.066.02c-5.79 2.015-7.86 6.025-8.04 6.4 1.73 1.358 3.92 2.166 6.29 2.166 1.42 0 2.77-.29 4-.814zm-11.62-2.58c.232-.4 3.045-5.055 8.332-6.765.135-.045.27-.084.405-.12-.26-.585-.54-1.167-.832-1.74C7.17 11.775 2.206 11.71 1.756 11.7l-.004.312c0.2 62 2.58 11.81 6.633 14.95zm16.4-16.6z" }
-                  ].map((platform) => (
-                    <a
-                      key={platform.name}
-                      href={`#${platform.name.toLowerCase()}`}
-                      className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center group transition-all"
-                      onMouseEnter={() => setCursorHovering(true)}
-                      onMouseLeave={() => setCursorHovering(false)}
-                    >
-                      <span className="sr-only">{platform.name}</span>
-                      <svg
-                        className="h-5 w-5 text-indigo-600 group-hover:text-indigo-800 transition-colors"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path d={platform.icon} />
-                      </svg>
-                    </a>
-                  ))}
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                  Frequently Asked Questions
-                </h3>
-                
-                <div className="space-y-6">
-                  {[
-                    {
-                      question: "What is your typical project process?",
-                      answer: "I follow a structured approach: discovery, planning, design, development, testing, and launch. Each phase includes client collaboration and feedback."
-                    },
-                    {
-                      question: "What are your rates?",
-                      answer: "My rates vary based on project scope and complexity. I offer hourly rates and project-based pricing. Contact me for a personalized quote."
-                    },
-                    {
-                      question: "How long does a typical project take?",
-                      answer: "Project timelines depend on scope and requirements. A simple website might take 2-4 weeks, while complex applications can take 2-3 months or more."
-                    }
-                  ].map((faq, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: i * 0.1 }}
-                      className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 "
-                    >
-                      <h4 className="text-lg font-medium text-gray-900 mb-2">
-                        {faq.question}
-                      </h4>
-                      <p className="text-gray-600">
-                        {faq.answer}
-                      </p>
-                    </motion.div>
-                  ))}
                 </div>
               </div>
             </motion.div>
@@ -483,46 +413,6 @@ const Contact = () => {
               </div>
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* Call to Action Section */}
-      <section className="py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 opacity-10"></div>
-        <div className="container mx-auto px-8 relative z-20">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="max-w-3xl mx-auto text-center"
-          >
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Ready to Start Your Next Project?
-            </h3>
-            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-              Whether you need a complete digital solution or have a specific challenge in mind,
-              I'm here to help bring your vision to life.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <a
-                href="#contact"
-                className="px-8 py-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-lg font-medium transition-transform hover:-translate-y-1 hover:shadow-lg"
-                onMouseEnter={() => setCursorHovering(true)}
-                onMouseLeave={() => setCursorHovering(false)}
-              >
-                Get In Touch
-              </a>
-              <Link
-                to="/projects"
-                className="px-8 py-4 rounded-full border-2 border-gray-300 text-gray-700 text-lg font-medium transition-all hover:border-indigo-500 hover:text-indigo-500"
-                onMouseEnter={() => setCursorHovering(true)}
-                onMouseLeave={() => setCursorHovering(false)}
-              >
-                View My Work
-              </Link>
-            </div>
-          </motion.div>
         </div>
       </section>
 

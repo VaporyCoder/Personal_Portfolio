@@ -1,32 +1,105 @@
 import { useParams, Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import projects from "../data/projects";
 
+const Pill = ({ children }) => (
+  <span className="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+    {children}
+  </span>
+);
+
+const Section = ({ eyebrow, title, children, className = "" }) => (
+  <section className={`py-24 relative ${className}`}>
+    <div className="container mx-auto px-8">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, margin: "-100px" }}
+        className="mb-16"
+      >
+        <div className="flex items-center mb-4">
+          <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
+          <h2 className="text-lg text-indigo-500 dark:text-indigo-400 font-semibold uppercase tracking-wide">
+            {eyebrow}
+          </h2>
+        </div>
+        <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+          {title}
+        </h3>
+      </motion.div>
+      {children}
+    </div>
+  </section>
+);
+
 const ProjectDetail = () => {
   const { slug } = useParams();
-  const project = projects.find((p) => p.slug === slug);
+  const project = (projects || []).find((p) => p.slug === slug);
   const [activeImage, setActiveImage] = useState(0);
 
   if (!project) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-        <h2 className="text-2xl text-gray-900 dark:text-white">Project not found</h2>
+        <h2 className="text-2xl text-gray-900 dark:text-white">
+          Project not found
+        </h2>
       </div>
     );
   }
+
+  const {
+    title,
+    shortDescription,
+    overview,
+    images = [],
+    bgColor,
+    liveUrl,
+    githubUrl,
+    figmaUrl,
+    role = "UX/UI Designer",
+    team = "Solo project",
+    timeline = "4–6 weeks",
+    tools = [],
+    problem,
+    goals = [],
+    research = [],
+    process = [],
+    design = [],
+    outcomes = [],
+    nextSteps = [],
+    features = [],
+    stats = [],
+  } = project;
+
+  const processItems = process.map((step) =>
+    typeof step === "string" ? { phase: "Step", description: step } : step
+  );
+
+  const decisions =
+    design.length > 0
+      ? design.map((d) =>
+          typeof d === "string" ? { title: "Decision", description: d } : d
+        )
+      : features.map((f) =>
+          typeof f === "string" ? { title: "Decision", description: f } : f
+        );
+
   return (
     <div className="relative min-h-screen w-full bg-white dark:bg-gray-900 transition-colors duration-500">
       {/* Noise texture overlay */}
       <div className="fixed inset-0 pointer-events-none z-10 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]"></div>
 
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden py-32">
         <div className="absolute w-[800px] h-[800px] opacity-30 dark:opacity-40 blur-3xl">
           <motion.div
             animate={{ rotateZ: 360, rotateY: 360, rotateX: 360 }}
             transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            className={`w-full h-full rounded-full ${project.bgColor}`}
+            className={`w-full h-full rounded-full ${
+              bgColor || "bg-gradient-to-br from-indigo-500 to-purple-600"
+            }`}
           />
         </div>
 
@@ -39,16 +112,16 @@ const ProjectDetail = () => {
           >
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
               <span className="bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 bg-clip-text text-transparent">
-                {project.title}
+                {title}
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-              {project.shortDescription}
+              {shortDescription || overview}
             </p>
-            <div className="flex justify-center gap-4">
-              {project.liveUrl && (
+            <div className="flex justify-center gap-4 flex-wrap">
+              {liveUrl && (
                 <a
-                  href={project.liveUrl}
+                  href={liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-lg font-medium hover:-translate-y-1 hover:shadow-lg transition-transform"
@@ -56,9 +129,19 @@ const ProjectDetail = () => {
                   View Live
                 </a>
               )}
-              {project.githubUrl && (
+              {figmaUrl && (
                 <a
-                  href={project.githubUrl}
+                  href={figmaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 rounded-full border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-lg font-medium hover:border-indigo-500 hover:text-indigo-500 dark:hover:border-indigo-400 dark:hover:text-indigo-400 transition-all"
+                >
+                  View Figma
+                </a>
+              )}
+              {githubUrl && (
+                <a
+                  href={githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3 rounded-full border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-lg font-medium hover:border-indigo-500 hover:text-indigo-500 dark:hover:border-indigo-400 dark:hover:text-indigo-400 transition-all"
@@ -66,548 +149,337 @@ const ProjectDetail = () => {
                   View Code
                 </a>
               )}
-              {project.figmaUrl && (
-    <a
-      href={project.figmaUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="px-6 py-3 rounded-full border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-lg font-medium hover:border-indigo-500 hover:text-indigo-500 dark:hover:border-indigo-400 dark:hover:text-indigo-400 transition-all"
-    >
-      View Figma
-    </a>
-  )}
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Overview Section */}
-      <section className="py-24 relative">
-        <div className="container mx-auto px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mb-16"
-          >
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
-              <h2 className="text-lg text-indigo-500 dark:text-indigo-400 font-semibold uppercase tracking-wide">
-                Project Overview
-              </h2>
-            </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              About {project.title}
-            </h3>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
-              {project.overview}
-            </p>
-          </motion.div>
+      {/* Overview */}
+      <Section eyebrow="Project Overview" title={`About ${title}`}>
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
+          {overview}
+        </p>
 
-          {/* Image Gallery */}
-          {project.images?.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="relative"
-            >
-              <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-6">
-                <motion.img
-                  key={activeImage}
-                  src={project.images[activeImage]}
-                  alt={`${project.title} screenshot ${activeImage + 1}`}
-                  className="w-full h-full object-cover"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-              </div>
-              <div className="flex gap-4 justify-center">
-                {project.images.map((img, index) => (
-                  <motion.button
-                    key={index}
-                    onClick={() => setActiveImage(index)}
-                    className={`w-24 h-16 rounded-lg overflow-hidden ${activeImage === index ? 'ring-2 ring-indigo-500' : ''}`}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <img
-                       src={img}
-                      alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </div>
-      </section>
-
-      {/* Technical Details Section */}
-<section className="py-24 relative bg-gray-50 dark:bg-gray-800/20">
-  <div className="container mx-auto px-8">
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true, margin: "-100px" }}
-      className="mb-16"
-    >
-      <div className="flex items-center mb-4">
-        <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
-        <h2 className="text-lg text-indigo-500 dark:text-indigo-400 font-semibold uppercase tracking-wide">
-          Technical Implementation
-        </h2>
-      </div>
-      <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-        How It Was Built
-      </h3>
-    </motion.div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {project.frontend && (
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-800"
-          whileHover={{ y: -10 }}
-        >
-          <h4 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Frontend</h4>
-          <ul className="space-y-3">
-            {project.frontend.map((item, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-center"
-              >
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: i * 0.2 }}
-                  className="w-2 h-2 rounded-full bg-indigo-500 mr-3"
-                />
-                <span className="text-gray-700 dark:text-gray-300">{item}</span>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.div>
-      )}
-
-      {project.backend && (
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-800"
-          whileHover={{ y: -10 }}
-        >
-          <h4 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Backend</h4>
-          <ul className="space-y-3">
-            {project.backend.map((item, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-center"
-              >
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: i * 0.2 }}
-                  className="w-2 h-2 rounded-full bg-indigo-500 mr-3"
-                />
-                <span className="text-gray-700 dark:text-gray-300">{item}</span>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.div>
-      )}
-
-      {project.design && (
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-800"
-          whileHover={{ y: -10 }}
-        >
-          <h4 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Design</h4>
-          <ul className="space-y-3">
-            {project.design.map((item, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-center"
-              >
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: i * 0.2 }}
-                  className="w-2 h-2 rounded-full bg-indigo-500 mr-3"
-                />
-                <span className="text-gray-700 dark:text-gray-300">{item}</span>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.div>
-      )}
-
-      {project.research && (
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-800"
-          whileHover={{ y: -10 }}
-        >
-          <h4 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Research</h4>
-          <ul className="space-y-3">
-            {project.research.map((item, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-center"
-              >
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: i * 0.2 }}
-                  className="w-2 h-2 rounded-full bg-indigo-500 mr-3"
-                />
-                <span className="text-gray-700 dark:text-gray-300">{item}</span>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.div>
-      )}
-    </div>
-
-    {project.technical && (
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        viewport={{ once: true, margin: "-100px" }}
-        className="mt-12"
-      >
-        <h4 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Technical Highlights</h4>
-        <ul className="space-y-4">
-          {project.technical.map((item, i) => (
-            <motion.li
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className="text-gray-600 dark:text-gray-300"
-            >
-              {item}
-            </motion.li>
-          ))}
-        </ul>
-      </motion.div>
-    )}
-
-    {project.process && (
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        viewport={{ once: true, margin: "-100px" }}
-        className="mt-12"
-      >
-        <h4 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Process</h4>
-        <ul className="space-y-4">
-          {project.process.map((item, i) => (
-            <motion.li
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white dark:bg-gray-900 rounded-xl p-4 shadow-md border border-gray-100 dark:border-gray-800"
-            >
-              <h5 className="font-bold text-gray-900 dark:text-white mb-2">{item.phase}</h5>
-              <p className="text-gray-600 dark:text-gray-300">{item.description}</p>
-            </motion.li>
-          ))}
-        </ul>
-      </motion.div>
-    )}
-  </div>
-</section>
-
-      {/* Features Section */}
-      <section className="py-24 relative">
-        <div className="container mx-auto px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mb-16"
-          >
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
-              <h2 className="text-lg text-indigo-500 dark:text-indigo-400 font-semibold uppercase tracking-wide">
-                Key Features
-              </h2>
-            </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              What Makes It Stand Out
-            </h3>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {project.features.map((feature, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-800"
-                whileHover={{ y: -10 }}
-              >
-                <h4 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">{feature.title}</h4>
-                <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
-              </motion.div>
-            ))}
+        {/* Meta: Role, Timeline, Team, Tools */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+            <h4 className="font-semibold text-gray-900 dark:text-white">
+              Role
+            </h4>
+            <p className="text-gray-600 dark:text-gray-300 mt-2">{role}</p>
           </div>
-        </div>
-      </section>
-
-      {/* Challenges Section */}
-      <section className="py-24 relative bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
-        <div className="container mx-auto px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mb-16"
-          >
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-1 bg-white mr-4"></div>
-              <h2 className="text-lg font-semibold uppercase tracking-wide">
-                Challenges & Solutions
-              </h2>
-            </div>
-            <h3 className="text-3xl md:text-4xl font-bold mb-6">
-              Overcoming Obstacles
-            </h3>
-          </motion.div>
-
-          <div className="space-y-8">
-            {project.challenges.map((challenge, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="bg-white/10 rounded-2xl p-6 backdrop-blur-sm"
-              >
-                <h4 className="text-xl font-bold mb-3">Problem: {challenge.problem}</h4>
-                <p className="text-white/80">Solution: {challenge.solution}</p>
-              </motion.div>
-            ))}
+          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+            <h4 className="font-semibold text-gray-900 dark:text-white">
+              Timeline
+            </h4>
+            <p className="text-gray-600 dark:text-gray-300 mt-2">{timeline}</p>
+          </div>
+          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+            <h4 className="font-semibold text-gray-900 dark:text-white">
+              Team
+            </h4>
+            <p className="text-gray-600 dark:text-gray-300 mt-2">{team}</p>
           </div>
         </div>
 
-        {/* Animated background shapes */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full border border-white/20"
-              style={{
-                top: '50%',
-                left: '50%',
-                width: `${(i + 1) * 15}%`,
-                height: `${(i + 1) * 15}%`,
-                x: '-50%',
-                y: '-50%',
-              }}
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.1, 0.2, 0.1],
-              }}
-              transition={{
-                repeat: Infinity,
-                duration: 5 + i,
-                delay: i * 0.5,
-              }}
-            />
-          ))}
-        </div>
-      </section>
+        {tools.length > 0 && (
+          <div className="mt-6 flex flex-wrap gap-2">
+            {tools.slice(0, 8).map((t) => (
+              <Pill key={t}>{t}</Pill>
+            ))}
+          </div>
+        )}
 
-      {/* Results Section */}
-      <section className="py-24 relative">
-        <div className="container mx-auto px-8">
+        {/* Image Gallery */}
+        {images.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mb-16"
+            className="relative mt-12"
           >
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
-              <h2 className="text-lg text-indigo-500 dark:text-indigo-400 font-semibold uppercase tracking-wide">
-                Project Outcomes
-              </h2>
+            <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-6">
+              <motion.img
+                key={activeImage}
+                src={images[activeImage]}
+                alt={`${title} screenshot ${activeImage + 1}`}
+                className="w-full h-full object-contain bg-white dark:bg-gray-900"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
             </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              Impact & Achievements
-            </h3>
-          </motion.div>
-
-          <ul className="space-y-4 mb-12">
-            {project.results.map((result, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-start"
-              >
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: i * 0.2 }}
-                  className="w-2 h-2 rounded-full bg-indigo-500 mr-3 mt-2"
-                />
-                <span className="text-gray-600 dark:text-gray-300">{result}</span>
-              </motion.li>
-            ))}
-          </ul>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {project.stats.map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <motion.div
-                  initial={{ scale: 0.5, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 10, delay: 0.2 + i * 0.1 }}
-                  viewport={{ once: true }}
-                  className="text-4xl md:text-5xl font-bold text-indigo-600 dark:text-indigo-400 mb-2"
+            <div className="flex gap-4 justify-center">
+              {images.map((img, index) => (
+                <motion.button
+                  key={index}
+                  onClick={() => setActiveImage(index)}
+                  className={`w-24 h-16 rounded-lg overflow-hidden ${
+                    activeImage === index ? "ring-2 ring-indigo-500" : ""
+                  }`}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {stat.value}
-                </motion.div>
-                <p className="text-gray-600 dark:text-gray-400">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Next Steps Section */}
-      <section className="py-24 relative bg-gray-50 dark:bg-gray-800/20">
-        <div className="container mx-auto px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mb-16"
-          >
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
-              <h2 className="text-lg text-indigo-500 dark:text-indigo-400 font-semibold uppercase tracking-wide">
-                Future Plans
-              </h2>
+                  <img
+                    src={img}
+                    alt={`Thumbnail ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.button>
+              ))}
             </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              What's Next for {project.title}
-            </h3>
           </motion.div>
+        )}
+      </Section>
 
+      {/* Problem & Goals */}
+      {(problem || goals.length > 0) && (
+        <Section
+          eyebrow="Framing"
+          title="Problem & Goals"
+          className="bg-gray-50 dark:bg-gray-800/20"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-800">
+              <h4 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                Problem
+              </h4>
+              <p className="text-gray-600 dark:text-gray-300">
+                {problem || "What user or business problem were we solving?"}
+              </p>
+            </div>
+            {goals.length > 0 && (
+              <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-800">
+                <h4 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                  Goals
+                </h4>
+                <ul className="space-y-3">
+                  {goals.map((g, i) => (
+                    <li key={i} className="flex items-start">
+                      <span className="w-2 h-2 rounded-full bg-indigo-500 mr-3 mt-2" />
+                      <span className="text-gray-600 dark:text-gray-300">
+                        {g}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </Section>
+      )}
+
+      {/* Research */}
+      {research.length > 0 && (
+        <Section eyebrow="Discovery" title="Research">
           <ul className="space-y-4">
-            {project.nextSteps.map((step, i) => (
-              <motion.li
+            {research.map((r, i) => (
+              <li
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-start"
+                className="bg-white dark:bg-gray-900 rounded-xl p-4 shadow-md border border-gray-100 dark:border-gray-800"
               >
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: i * 0.2 }}
-                  className="w-2 h-2 rounded-full bg-indigo-500 mr-3 mt-2"
-                />
-                <span className="text-gray-600 dark:text-gray-300">{step}</span>
-              </motion.li>
+                <p className="text-gray-700 dark:text-gray-300">{r}</p>
+              </li>
             ))}
           </ul>
-        </div>
-      </section>
+        </Section>
+      )}
 
-      {/* Call to Action */}
-      <section className="py-24 relative">
-        <div className="container mx-auto px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              Let's Build Something Extraordinary
-            </h3>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
-              Interested in collaborating on a project like {project.title}? Let's connect and create something impactful together.
-            </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full text-lg font-medium hover:-translate-y-1 hover:shadow-lg transition-transform"
-            >
-              Get in Touch
-              <svg
-                className="ml-2 w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+      {/* Personas */}
+      {project.personas?.length > 0 && (
+        <Section
+          eyebrow="Users"
+          title="Personas"
+          className="bg-gray-50 dark:bg-gray-800/20"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {project.personas.map((persona, i) => {
+              const accents = [
+                "from-indigo-500 to-purple-600",
+                "from-pink-500 to-rose-600",
+                "from-emerald-500 to-teal-600",
+                "from-amber-500 to-orange-600",
+              ];
+              const accent = persona.accent || accents[i % accents.length];
+
+              return (
+                <div
+                  key={i}
+                  className="relative rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm overflow-hidden"
+                >
+                  {/* Accent header strip */}
+                  <div className={`h-1.5 w-full bg-gradient-to-r ${accent}`} />
+
+                  <div className="p-8">
+                    {/* Persona name + optional tagline */}
+                    <div className="mb-4">
+                      <h4 className="text-2xl font-bold text-gray-900 dark:text-white">
+                        {persona.name}
+                      </h4>
+                      {persona.tagline && (
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                          {persona.tagline}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Summary */}
+                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                      {persona.summary}
+                    </p>
+
+                    {/* Needs as chips */}
+                    {persona.needs?.length > 0 && (
+                      <div className="mb-6">
+                        <h5 className="font-semibold text-gray-900 dark:text-white mb-2">
+                          Needs
+                        </h5>
+                        <div className="flex flex-wrap gap-2">
+                          {persona.needs.map((n, j) => (
+                            <span
+                              key={j}
+                              className="px-2.5 py-1 text-xs rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            >
+                              {n}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Pain points */}
+                    {persona.painPoints?.length > 0 && (
+                      <div className="mb-6">
+                        <h5 className="font-semibold text-gray-900 dark:text-white mb-2">
+                          Pain Points
+                        </h5>
+                        <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-300">
+                          {persona.painPoints.map((p, j) => (
+                            <li key={j}>{p}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Success */}
+                    {persona.success?.length > 0 && (
+                      <div>
+                        <h5 className="font-semibold text-gray-900 dark:text-white mb-2">
+                          Success Looks Like
+                        </h5>
+                        <div className="flex flex-wrap gap-2">
+                          {persona.success.map((s, j) => (
+                            <span
+                              key={j}
+                              className="px-2.5 py-1 text-xs rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            >
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Section>
+      )}
+
+      {/* Process */}
+      {processItems.length > 0 && (
+        <Section
+          eyebrow="Approach"
+          title="Process"
+          className="bg-gray-50 dark:bg-gray-800/20"
+        >
+          <ul className="space-y-4">
+            {processItems.map((step, i) => (
+              <li
+                key={i}
+                className="bg-white dark:bg-gray-900 rounded-xl p-4 shadow-md border border-gray-100 dark:border-gray-800"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+                <h5 className="font-bold text-gray-900 dark:text-white mb-2">
+                  {step.phase || `Step ${i + 1}`}
+                </h5>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {step.description}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      {/* Key Design Decisions */}
+      {decisions.length > 0 && (
+        <Section eyebrow="Design" title="Key Design Decisions">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {decisions.map((d, i) => (
+              <div
+                key={i}
+                className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-800"
+              >
+                <h4 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">
+                  {d.title || "Decision"}
+                </h4>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {d.description || (typeof d === "string" ? d : "")}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {/* Outcomes & Metrics */}
+      {(outcomes.length > 0 || stats.length > 0) && (
+        <Section eyebrow="Impact" title="Outcomes">
+          {outcomes.length > 0 && (
+            <ul className="space-y-4 mb-12">
+              {outcomes.map((o, i) => (
+                <li key={i} className="flex items-start">
+                  <span className="w-2 h-2 rounded-full bg-indigo-500 mr-3 mt-2" />
+                  <span className="text-gray-600 dark:text-gray-300">{o}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          {stats.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {stats.map((s, i) => (
+                <div key={i} className="text-center">
+                  <div className="text-4xl md:text-5xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">
+                    {s.value}
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-400">{s.label}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </Section>
+      )}
+
+      {/* Next Steps */}
+      {nextSteps.length > 0 && (
+        <Section
+          eyebrow="Future Plans"
+          title={`What's Next for ${title}`}
+          className="bg-gray-50 dark:bg-gray-800/20"
+        >
+          <ul className="space-y-4">
+            {nextSteps.map((n, i) => (
+              <li key={i} className="flex items-start">
+                <span className="w-2 h-2 rounded-full bg-indigo-500 mr-3 mt-2" />
+                <span className="text-gray-600 dark:text-gray-300">{n}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
     </div>
   );
 };
